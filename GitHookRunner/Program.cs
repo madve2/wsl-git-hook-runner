@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace GitHookRunner
 {
@@ -13,7 +8,7 @@ namespace GitHookRunner
 		static void Main(string[] args)
 		{
 			Console.WriteLine("WSL Git hook runner started.");
-			var script = args[1].Replace('\\', '/');
+			var script = args[1].Replace('\\', '/').Replace("////", "/").Trim('\'');
 			var driveLetter = script[0];
 			script = script.Replace(driveLetter + ":/", $"/mnt/{driveLetter.ToString().ToLowerInvariant()}/");
 
