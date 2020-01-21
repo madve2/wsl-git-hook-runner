@@ -8,16 +8,16 @@ namespace GitHookRunner
 		static void Main(string[] args)
 		{
 			Console.WriteLine("WSL Git hook runner started.");
-			var script = args[1].Replace('\\', '/').Replace("////", "/").Trim('\'');
-			var driveLetter = script[0];
-			script = script.Replace(driveLetter + ":/", $"/mnt/{driveLetter.ToString().ToLowerInvariant()}/");
+			var winScript = args[1].Replace('\\', '/').Replace("////", "/").Trim('\'');
+			var driveLetter = winScript[0];
+			var bashScript = winScript.Replace(driveLetter + ":/", $"/mnt/{driveLetter.ToString().ToLowerInvariant()}/");
 
 			var wsl = new Process
 			{
 				StartInfo = new ProcessStartInfo
 				{
 					FileName = @"wsl.exe",
-					Arguments = script,
+					Arguments = $"bash -ic {bashScript}",
 					UseShellExecute = false,
 					RedirectStandardOutput = true,
 					CreateNoWindow = true
